@@ -19,8 +19,18 @@ pip install uv
 ### On Your Linux Machine
 
 1. **Clone the repository** (or copy the project files)
+   ```bash
+   git clone <your-repo-url>
+   cd autonomous_agents_latent_alignment
+   ```
 
-2. **Sync dependencies** using the lock file:
+2. **Ensure package structure** (should already be in repo):
+   ```bash
+   # Verify __init__.py files exist (already created)
+   ls model/__init__.py utils/__init__.py scil/__init__.py
+   ```
+
+3. **Sync dependencies** using the lock file:
    ```bash
    uv sync
    ```
@@ -28,16 +38,17 @@ pip install uv
    This will:
    - Create a virtual environment (`.venv`)
    - Install all dependencies with exact versions from `uv.lock`
+   - Build the project packages (model, utils, scil)
    - Ensure identical environment to macOS development machine
 
-3. **Activate the environment**:
+4. **Activate the environment**:
    ```bash
    source .venv/bin/activate
    ```
 
-4. **Verify installation**:
+5. **Verify installation**:
    ```bash
-   python -c "import torch; import gymnasium; print('✓ Environment ready')"
+   python -c "import torch; import gymnasium; from model.agent import Agent; print('✓ Environment ready')"
    ```
 
 ## Quick Start
