@@ -6,10 +6,17 @@
 # 1. Install uv (if needed)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# 2. Run automated setup with CUDA
+# 2. Run automated setup with CUDA + Atari
 ./setup_cuda.sh
 
-# That's it! Environment is ready with GPU support.
+# That's it! Environment is ready with GPU support and Atari games.
+```
+
+**Note**: The setup script installs Atari support by default. For other environments:
+```bash
+# Manual setup with different extras
+uv sync --extra procgen  # Procgen environments
+uv sync --all-extras     # All environments
 ```
 
 ## Setup on macOS (CPU only)
@@ -18,8 +25,8 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # 1. Install uv (if needed)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# 2. Sync dependencies
-uv sync
+# 2. Sync dependencies with Atari support
+uv sync --extra atari
 
 # 3. Activate
 source .venv/bin/activate

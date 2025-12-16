@@ -31,8 +31,24 @@ pip install uv
    ```
 
 3. **Sync dependencies** using the lock file:
+
+   **Basic install** (core dependencies only):
    ```bash
    uv sync
+   ```
+
+   **With Atari support** (recommended for RL):
+   ```bash
+   uv sync --extra atari
+   ```
+
+   **With multiple environments**:
+   ```bash
+   # Atari + Procgen
+   uv sync --extra atari --extra procgen
+
+   # Or all environments
+   uv sync --all-extras
    ```
 
    This will:
@@ -69,13 +85,30 @@ python ppo_atari_lstm.py \
     --efficientnet-pretrained
 ```
 
+## Optional Environment Dependencies
+
+The project supports multiple RL environments via optional dependency groups:
+
+| Extra | Environments | Install Command |
+|-------|-------------|-----------------|
+| **`atari`** | Atari 2600 games (Pong, Breakout, etc.) | `uv sync --extra atari` |
+| **`procgen`** | Procedurally-generated environments | `uv sync --extra procgen` |
+| **`mujoco`** | MuJoCo physics simulator | `uv sync --extra mujoco` |
+| **`envpool`** | Fast vectorized environments | `uv sync --extra envpool` |
+| **All** | All environments above | `uv sync --all-extras` |
+
+**Recommendation**: Start with `--extra atari` for this project (Atari LSTM experiments).
+
 ## Adding New Dependencies
 
 If you need to add packages:
 
 ```bash
-# Add a dependency
+# Add a core dependency
 uv add package-name
+
+# Add to an optional group
+uv add --optional atari package-name
 
 # Add a dev dependency
 uv add --dev package-name

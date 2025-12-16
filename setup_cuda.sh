@@ -5,8 +5,9 @@ set -e
 
 echo "Setting up environment with CUDA support..."
 
-# Sync all dependencies except PyTorch
-uv sync
+# Sync all dependencies except PyTorch (with Atari support)
+echo "Installing dependencies with Atari support..."
+uv sync --extra atari
 
 # Activate environment
 source .venv/bin/activate

@@ -16,9 +16,10 @@
 - **`setup_cuda.sh`** - Automated CUDA setup for Linux (executable)
 
 ### Documentation
-- **`SETUP.md`** - Detailed setup instructions
+- **`SETUP.md`** - Detailed setup instructions with optional extras
 - **`QUICK_START.md`** - Fast-track guide
 - **`ENCODER_USAGE.md`** - Encoder architecture documentation
+- **`OPTIONAL_DEPENDENCIES.md`** - Guide to environment-specific extras
 - **`GIT_COMMIT_CHECKLIST.md`** - This file
 
 ## 📝 Git Commands
@@ -28,20 +29,20 @@
 git add pyproject.toml uv.lock .gitignore
 git add model/__init__.py utils/__init__.py scil/__init__.py
 git add setup_cuda.sh
-git add SETUP.md QUICK_START.md ENCODER_USAGE.md GIT_COMMIT_CHECKLIST.md
+git add SETUP.md QUICK_START.md ENCODER_USAGE.md OPTIONAL_DEPENDENCIES.md GIT_COMMIT_CHECKLIST.md
 git add ppo_atari_lstm.py  # Updated to remove cleanrl dependency
 
 # Verify what will be committed
 git status
 
 # Commit
-git commit -m "Add uv dependency management and Linux setup
+git commit -m "Add uv dependency management with optional extras
 
-- Add pyproject.toml with all dependencies
-- Add uv.lock for reproducible environments
+- Add pyproject.toml with core and optional dependencies (atari, procgen, mujoco, envpool)
+- Add uv.lock for reproducible environments (124 packages total)
 - Add __init__.py files for proper package structure
 - Add setup_cuda.sh for automated CUDA setup on Linux
-- Add comprehensive setup documentation
+- Add comprehensive documentation (setup, quick start, optional deps)
 - Update .gitignore (excludes cleanrl, .venv, etc.)
 - Remove unused cleanrl imports from ppo_atari_lstm.py"
 
@@ -54,11 +55,15 @@ git push
 After pulling these changes:
 
 ```bash
-# Quick setup (with GPU)
+# Quick setup (with GPU + Atari)
 ./setup_cuda.sh
 
-# Or manual
-uv sync
+# Or manual with extras
+uv sync --extra atari  # Recommended for this project
+source .venv/bin/activate
+
+# Or with multiple extras
+uv sync --extra atari --extra procgen
 source .venv/bin/activate
 ```
 
@@ -104,19 +109,29 @@ All these are already in `.gitignore`.
 
 ## 🎯 Expected Result on Linux
 
-After cloning and running `uv sync`:
+After cloning and running `uv sync --extra atari`:
 
 ```
-Resolved 94 packages in 7ms
-Installed 94 packages in 2s
+Resolved 124 packages in 7ms
+Installed 98 packages in 3s
   + torch==2.9.1 (CPU version)
   + gymnasium==0.29.1
+  + ale-py==0.8.1
+  + AutoROM[accept-rom-license]==0.4.2
   + numpy==<2.0.0
-  + ... (91 more packages)
+  + ... (93 more packages)
 ✓ Environment ready!
 ```
 
 Then `./setup_cuda.sh` replaces CPU PyTorch with CUDA version.
+
+**Without extras** (`uv sync`):
+- Installs 94 base packages
+- No Atari/Procgen/MuJoCo support
+
+**With all extras** (`uv sync --all-extras`):
+- Installs all 124 packages
+- Full environment support
 
 ## 📊 File Sizes
 
